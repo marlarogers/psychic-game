@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Psychic Game</title>
+  </head>
+  <body>
+ <div id="game">
+    <h1> The Psychic Game </h1>
+        <p>Guess what letter I'm thinking of!</p>
+        <p>Wins:</p>
+        <p>Losses:</p>
+        <p>Guesses Left:</p>
+        <p>Your Guesses so far:</p>
+</div>
+        
+    <script type="text/javascript">
+// PSEUDOCODE //
+
+//  1. Computer has letter in mind [ tell computer to think of a letter. Array of all letters? ]
+//  2. User taps key on keyboard *event* [ function(event)? ]
+//      - IF you picked the right letter [ if () statement ]
+//          - Win number goes up 
+//          - Game resets
+// 
+//      - ELSE 
+//          - Letter you picked populates in Guesses so far
+//          - Guesses left number goes down from 9
+//              - IF Guess left = 0 [ if() statement]
+//                  - Losses number goes up
+//                  - Game resets
+
+//define computer choices
+    var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
+
+//store win/loss data
+    var wins = 0;
+    var losses = 0;
+    var numberGuesses = 9;
+    var choices = [];
+
+//onkeyup event
+
+    document.onkeyup = function(event) {
+      var userGuess = event.key;
+
+//tell computer to make a guess too 
+      var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+      var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",];
+  
+//if statements for determining win or loss and what the game should do in these cases 
+      if (options.indexOf(userGuess) > -1) {
+
+      if (userGuess === computerGuess) {
+      wins++;
+      numberGuesses = 9;
+      choices = [];
+      }
+
+      if (userGuess != computerGuess) {
+      numberGuesses --;
+      choices.push(userGuess);
+      }
+
+      if (numberGuesses === 0) {
+
+      numberGuesses = 9;
+      losses ++;
+      choices = []; 
+ }
+
+//variable to update the data in the HTML
+ var html = 
+ "<h1> The Psychic Game </h1>" +
+ "<p>Guess what letter I'm thinking of!</p>" +
+ "<p>Wins: " + wins + "</p>" +
+ "<p>Losses: " + losses + "</p>" +
+ "<p>Guesses Left: " + numberGuesses + "</p>" +
+ "<p>Your Guesses so far: " + choices.join(", ") + "</p>";
+
+ document.querySelector("#game").innerHTML = html;
+}
+};
+
+    </script>
+    
+  </body>
+</html>
